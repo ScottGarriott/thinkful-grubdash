@@ -36,6 +36,7 @@ function doesPriceExist(req, res, next){
     const {data: {price} = {} } = req.body
 
     if(price){
+        res.locals.price = price
         return next()
     }else{
         return next({
@@ -46,7 +47,7 @@ function doesPriceExist(req, res, next){
 }
 
 function isPriceValid(req, res, next){
-    const {data: {price} = {} } = req.body
+    const price = res.locals.price
 
     if(Number.isInteger(price) && price > 0){
         return next()
@@ -87,7 +88,7 @@ function doesDishExist(req, res, next){
 }
 
 function doesDishIdMatchRouteId (req, res, next){
-    const {dishId} = req.params
+    const dishId = res.locals.dish.id
     const {data: {id} = {} } = req.body
 
     if(id){
